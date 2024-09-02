@@ -19,6 +19,8 @@ ENV LC_ALL en_US.UTF-8
 RUN rm -f /usr/bin/python \
      && ln -s /usr/bin/python3 /usr/bin/python
 
+RUN apt-get update
+RUN apt-get install -y vim git tmux
 
 RUN pip3 install jupyter
 RUN pip3 install numpy
@@ -30,6 +32,11 @@ RUN pip3 install pyyaml
 RUN pip3 install requests
 RUN pip3 install seaborn
 RUN pip3 install scikit-learn
+RUN pip3 install pandas-datareader
+RUN pip3 install yfinance --upgrade
+RUN pip3 install s3fs
+RUN pip3 install apache-airflow
+RUN pip3 install kafka-python
 
 WORKDIR /main
 RUN chmod -R a+w .

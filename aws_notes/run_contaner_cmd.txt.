@@ -1,0 +1,1 @@
+docker run --rm -it --entrypoint bash -v /home/ubuntu/efs-mount-point/students/perindom/root:/root -p 8080-8130:8080 --name perindom pipeline:latest

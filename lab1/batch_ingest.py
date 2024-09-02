@@ -12,7 +12,7 @@ def ingest_data():
     tickers = ["AAPL", "GOOGL", "AMZN"]
     start_date = '2020-1-1'
     end_date = '2024-1-1'
-
+    
     yfin.pdr_override()
     # All the data is stored in a pandas dataframe called data
     data = pdr.get_data_yahoo(tickers, start=start_date, end=end_date)
@@ -34,3 +34,7 @@ def ingest_data():
     # Push data to S3 bucket as a pickle file
     with s3.open('{}/{}'.format(DIR, 'data.pkl'), 'wb') as f:
         f.write(pickle.dumps(data))
+        print('sending data to s3')
+
+if __name__ == "__main__":
+    ingest_data()

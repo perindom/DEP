@@ -4,7 +4,7 @@ import numpy as np
 import pickle
 import pandas as pd
 from pandas_datareader import data as pdr
-import yfinance as yfin
+import kaggle
 
 def ingest_data():
     # Choose the ticker variables of the stocks the data of which you want to pull

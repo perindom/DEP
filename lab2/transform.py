@@ -7,7 +7,7 @@ def transform_data():
 
     s3 = S3FileSystem()
     # S3 bucket directory (data lake)
-    DIR = 's3://ece5984-s3-perindom/Lab2/batch_ingest/'
+    DIR = 's3://ece5984-s3-perindom/Lab2/batch_ingest'
     # Insert your S3 bucket address here. Read from the directory you created in batch ingest: Lab2/batch_ingest/
     # Get data from S3 bucket as a pickle file
     raw_data = np.load(s3.open('{}/{}'.format(DIR, 'data.pkl')), allow_pickle=True)  
@@ -19,12 +19,12 @@ def transform_data():
     raw_data.sort_index(axis=1, level=0, inplace=True)
     df_aapl_rw = raw_data['AAPL']
     df_amzn_rw = raw_data['AMZN']
-    df_noc_rw = raw_data['NOC']
+    df_googl_rw = raw_data['GOOGL']
 
     # Dropping rows with NaN in them
     df_aapl = df_aapl_rw.dropna()
     df_amzn = df_amzn_rw.dropna()
-    df_noc = df_noc_rw.dropna()
+    df_googl = df_googl_rw.dropna()
 
 
     # Removing rows with outliers
@@ -35,13 +35,13 @@ def transform_data():
         df_amzn = df_amzn.drop(df_amzn[df_amzn[col].values > 900].index)
         df_amzn = df_amzn.drop(df_amzn[df_amzn[col].values < 0.001].index)
 
-        df_noc = df_noc.drop(df_noc[df_noc[col].values > 900].index)
-        df_noc = df_noc.drop(df_noc[df_noc[col].values < 0.001].index)
+        df_googl = df_googl.drop(df_googl[df_googl[col].values > 900].index)
+        df_googl = df_googl.drop(df_googl[df_googl[col].values < 0.001].index)
 
     # Dropping duplicate rows
     df_aapl = df_aapl.drop_duplicates()
     df_amzn = df_amzn.drop_duplicates()
-    df_noc = df_noc.drop_duplicates()
+    df_googl = df_googl.drop_duplicates()
 
     # Push cleaned data to S3 bucket warehouse
     DIR_wh = 's3://ece5984-s3-perindom/Lab2/transformed'   # Insert your S3 bucket address here. Create a directory as: Lab2/transformed/
@@ -49,8 +49,8 @@ def transform_data():
         f.write(pickle.dumps(df_aapl))
     with s3.open('{}/{}'.format(DIR_wh, 'clean_amzn.pkl'), 'wb') as f:
         f.write(pickle.dumps(df_amzn))
-    with s3.open('{}/{}'.format(DIR_wh, 'clean_noc.pkl'), 'wb') as f:
-        f.write(pickle.dumps(df_noc))
+    with s3.open('{}/{}'.format(DIR_wh, 'clean_googl.pkl'), 'wb') as f:
+        f.write(pickle.dumps(df_googl))
 
 
 

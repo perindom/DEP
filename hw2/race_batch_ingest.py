@@ -30,7 +30,7 @@ def ingest_data():
     s3 = S3FileSystem()
 
     # S3 bucket directory
-    DIR = 's3://ece5984-s3-perindom/Lab1/f1' # insert your S3 URI here... DONE
+    DIR = 's3://ece5984-s3-perindom/hw2/batch_ingested' # insert your S3 URI here... DONE
 
     # Push data to S3 bucket as a pickle file
     with s3.open('{}/{}'.format(DIR, 'data.pkl'), 'wb') as f:

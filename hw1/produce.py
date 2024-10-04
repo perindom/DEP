@@ -30,7 +30,7 @@ def get_weather_data(lat, lon, api_key):
         return None
 
 def kafka_producer():
-    producer = KafkaProducer(bootstrap_servers=['34.227.190.251:9092'], # change ip and port number here
+    producer = KafkaProducer(bootstrap_servers=['34.227.190.251:9099'], # change ip and port number here
     value_serializer=lambda x: dumps(x).encode('utf-8'))
 
     t_end = time.time() + 60 * 1 # Amount of time data is sent for in seconds

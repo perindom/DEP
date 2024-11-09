@@ -22,8 +22,8 @@ def ingest_data():
     i = 0
     while i == 0:
         rand_col = data.sample(axis='columns').columns
-    if rand_col[0][0] != 'Volume':
-        i = 1
+        if rand_col[0][0] != 'Volume':
+            i = 1
     # Outliers
     data.loc[data.sample(frac=0.005).index, rand_col] = 1000
     data.loc[data.sample(frac=0.005).index, rand_col] = 0
@@ -31,7 +31,7 @@ def ingest_data():
     data = pd.concat([data, data.sample(frac=0.005)])
     s3 = S3FileSystem()
     # S3 bucket directory
-    DIR = ''  # Insert here
+    DIR = 's3://ece5984-s3-perindom/Lab3'  # Insert here
     # Push data to S3 bucket as a pickle file
     with s3.open('{}/{}'.format(DIR, 'data.pkl'), 'wb') as f:
         f.write(pickle.dumps(data))

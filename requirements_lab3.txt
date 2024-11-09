@@ -1,0 +1,3 @@
+scikit-learn
+keras
+s3fs

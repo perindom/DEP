@@ -10,7 +10,7 @@ from sklearn.model_selection import TimeSeriesSplit
 def feature_extract():
     s3 = S3FileSystem()
     # S3 bucket directory (data warehouse)
-    DIR_wh = '' # Insert here
+    DIR_wh = 's3://ece5984-s3-perindom/Lab3' # Insert here
     # Get data from S3 bucket as a pickle file
     aapl_df = np.load(s3.open('{}/{}'.format(DIR_wh, 'clean_aapl.pkl')),allow_pickle=True)
     amzn_df = np.load(s3.open('{}/{}'.format(DIR_wh, 'clean_amzn.pkl')),allow_pickle=True)
@@ -36,7 +36,7 @@ def feature_extract():
         y_train, y_test = target_aapl[:len(train_index)].values.ravel(),target_aapl[len(train_index): (len(train_index) + len(test_index))].values.ravel()
 
     # Push extracted features to data warehouse
-    DIR_aapl = ''  # Insert here
+    DIR_aapl = 's3://ece5984-s3-perindom/Lab3/aapl'  # Insert here
     with s3.open('{}/{}'.format(DIR_aapl, 'X_train_aapl.pkl'), 'wb') as f:
         f.write(pickle.dumps(X_train))
     with s3.open('{}/{}'.format(DIR_aapl, 'X_test_aapl.pkl'), 'wb') as f:
@@ -59,7 +59,7 @@ def feature_extract():
         y_train, y_test = target_amzn[:len(train_index)].values.ravel(),target_amzn[len(train_index): (len(train_index) + len(test_index))].values.ravel()
 
     # Push extracted features to data warehouse
-    DIR_amzn = ''  # Insert here
+    DIR_amzn = 's3://ece5984-s3-perindom/Lab3/amzn'  # Insert here
     with s3.open('{}/{}'.format(DIR_amzn, 'X_train_amzn.pkl'), 'wb') as f:
         f.write(pickle.dumps(X_train))
     with s3.open('{}/{}'.format(DIR_amzn, 'X_test_amzn.pkl'), 'wb') as f:
@@ -79,7 +79,7 @@ def feature_extract():
         X_train, X_test = feature_transform_googl[:len(train_index)],feature_transform_googl[len(train_index): (len(train_index) + len(test_index))]
         y_train, y_test = target_googl[:len(train_index)].values.ravel(),target_googl[len(train_index): (len(train_index) + len(test_index))].values.ravel()
     # Push extracted features to data warehouse
-    DIR_googl = ''  # Insert here
+    DIR_googl = 's3://ece5984-s3-perindom/Lab3/googl'  # Insert here
     with s3.open('{}/{}'.format(DIR_googl, 'X_train_googl.pkl'), 'wb') as f:
         f.write(pickle.dumps(X_train))
     with s3.open('{}/{}'.format(DIR_googl, 'X_test_googl.pkl'), 'wb') as f:

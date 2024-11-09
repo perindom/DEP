@@ -6,7 +6,7 @@ import pickle
 def transform_data():
     s3 = S3FileSystem()
     # S3 bucket directory (data lake)
-    DIR = '' # Insert here
+    DIR = 's3://ece5984-s3-perindom/Lab3' # Insert here
     # Get data from S3 bucket as a pickle file
     raw_data = np.load(s3.open('{}/{}'.format(DIR, 'data.pkl')), allow_pickle=True)
     # insert here
@@ -41,7 +41,7 @@ def transform_data():
     df_googl = df_googl.drop_duplicates()
 
     # Push cleaned data to S3 bucket warehouse
-    DIR_wh = '' # Insert here
+    DIR_wh = 's3://ece5984-s3-perindom/Lab3' # Insert here
     with s3.open('{}/{}'.format(DIR_wh, 'clean_aapl.pkl'), 'wb') as f:
         f.write(pickle.dumps(df_aapl))
     with s3.open('{}/{}'.format(DIR_wh, 'clean_amzn.pkl'), 'wb') as f:

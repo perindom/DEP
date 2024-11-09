@@ -12,9 +12,9 @@ import tempfile
 def build_train():
     s3 = S3FileSystem()
     # S3 bucket directory (data warehouse)
-    DIR_aapl = '' # Insert here
-    DIR_amzn = '' # Insert here
-    DIR_googl = '' # Insert here
+    DIR_aapl = 's3://ece5984-s3-perindom/Lab3/aapl' # Insert here
+    DIR_amzn = 's3://ece5984-s3-perindom/Lab3/amzn' # Insert here
+    DIR_googl = 's3://ece5984-s3-perindom/Lab3/googl' # Insert here
     X_train_aapl = np.load(s3.open('{}/{}'.format(DIR_aapl, 'X_train_aapl.pkl')),allow_pickle=True)
     X_test_aapl = np.load(s3.open('{}/{}'.format(DIR_aapl, 'X_test_aapl.pkl')),allow_pickle=True)
     y_train_aapl = np.load(s3.open('{}/{}'.format(DIR_aapl, 'y_train_aapl.pkl')),allow_pickle=True)
@@ -47,8 +47,8 @@ def build_train():
     # Save model temporarily
     with tempfile.TemporaryDirectory() as tempdir:
         lstm_aapl.save(f"{tempdir}/lstm_aapl.h5")
-    # Push saved model to S3
-    s3.put(f"{tempdir}/lstm_aapl.h5", f"{DIR_aapl}/lstm_aapl.h5")
+        # Push saved model to S3
+        s3.put(f"{tempdir}/lstm_aapl.h5", f"{DIR_aapl}/lstm_aapl.h5")
 
     # AMZN dataset model
     # Process the data for LSTM
@@ -69,8 +69,8 @@ def build_train():
     # Save model temporarily
     with tempfile.TemporaryDirectory() as tempdir:
         lstm_amzn.save(f"{tempdir}/lstm_amzn.h5")
-    # Push saved model to S3
-    s3.put(f"{tempdir}/lstm_amzn.h5", f"{DIR_amzn}/lstm_amzn.h5")
+        # Push saved model to S3
+        s3.put(f"{tempdir}/lstm_amzn.h5", f"{DIR_amzn}/lstm_amzn.h5")
 
     # AMZN dataset model
     # Process the data for LSTM
